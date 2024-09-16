@@ -1,0 +1,108 @@
+#define	Z180_IO_BASE	0x00			/* for LUNA XP */
+
+; ASCI serial ports
+#define	ASCI_CNTLA0	(Z180_IO_BASE+0x00)	/* ASCI control register A channel 0 */
+#define	ASCI_CNTLA1	(Z180_IO_BASE+0x01)	/* ASCI control register A channel 1 */
+#define	ASCI_CNTLB0	(Z180_IO_BASE+0x02)	/* ASCI control register B channel 0 */
+#define	ASCI_CNTLB1	(Z180_IO_BASE+0x03)	/* ASCI control register B channel 0 */
+#define	ASCI_STAT0	(Z180_IO_BASE+0x04)	/* ASCI status register    channel 0 */
+#define	ASCI_STAT1	(Z180_IO_BASE+0x05)	/* ASCI status register    channel 1 */
+#define	ASCI_TDR0	(Z180_IO_BASE+0x06)	/* ASCI transmit data reg, channel 0 */
+#define	ASCI_TDR1	(Z180_IO_BASE+0x07)	/* ASCI transmit data reg, channel 1 */
+#define	ASCI_RDR0	(Z180_IO_BASE+0x08)	/* ASCI receive data reg,  channel 0 */
+#define	ASCI_RDR1	(Z180_IO_BASE+0x09)	/* ASCI receive data reg,  channel 0 */
+#define	ASCI_ASEXT0	(Z180_IO_BASE+0x12)	/* ASCI extension register channel 0 */
+#define	ASCI_ASEXT1	(Z180_IO_BASE+0x13)	/* ASCI extension register channel 1 */
+#define	ASCI_ASTC0L	(Z180_IO_BASE+0x1A)	/* ASCI time constant register channel 0 low */
+#define	ASCI_ASTC0H	(Z180_IO_BASE+0x1B)	/* ASCI time constant register channel 0 high */
+#define	ASCI_ASTC1L	(Z180_IO_BASE+0x1C)	/* ASCI time constant register channel 1 low */
+#define	ASCI_ASTC1H	(Z180_IO_BASE+0x1D)	/* ASCI time constant register channel 1 high */
+
+; Z180 MMU
+#define	MMU_CBR		(Z180_IO_BASE+0x38)	/* common1 base register */
+#define	MMU_BBR		(Z180_IO_BASE+0x39)	/* bank base register */
+#define	MMU_CBAR	(Z180_IO_BASE+0x3A)	/* common/bank area register */
+
+; Z180 DMA engine
+#define	DMA_SAR0L	(Z180_IO_BASE+0x20)	/* DMA source address reg, channel 0L */
+#define	DMA_SAR0H	(Z180_IO_BASE+0x21)	/* DMA source address reg, channel 0H */
+#define	DMA_SAR0B	(Z180_IO_BASE+0x22)	/* DMA source address reg, channel 0B */
+#define	DMA_DAR0L	(Z180_IO_BASE+0x23)	/* DMA dest address reg,   channel 0L */
+#define	DMA_DAR0H	(Z180_IO_BASE+0x24)	/* DMA dest address reg,   channel 0H */
+#define	DMA_DAR0B	(Z180_IO_BASE+0x25)	/* DMA dest address reg,   channel 0B */
+#define	DMA_BCR0L	(Z180_IO_BASE+0x26)	/* DMA byte count reg,     channel 0L */
+#define	DMA_BCR0H	(Z180_IO_BASE+0x27)	/* DMA byte count reg,     channel 0H */
+#define	DMA_MAR1L	(Z180_IO_BASE+0x28)	/* DMA memory address reg, channel 1L */
+#define	DMA_MAR1H	(Z180_IO_BASE+0x29)	/* DMA memory address reg, channel 1H */
+#define	DMA_MAR1B	(Z180_IO_BASE+0x2A)	/* DMA memory address reg, channel 1B */
+#define	DMA_IAR1L	(Z180_IO_BASE+0x2B)	/* DMA I/O address reg,    channel 1L */
+#define	DMA_IAR1H	(Z180_IO_BASE+0x2C)	/* DMA I/O address reg,    channel 1H */
+#define	DMA_BCR1L	(Z180_IO_BASE+0x2E)	/* DMA byte count reg,     channel 1L */
+#define	DMA_BCR1H	(Z180_IO_BASE+0x2F)	/* DMA byte count reg,     channel 1H */
+#define	DMA_DSTAT	(Z180_IO_BASE+0x30)	/* DMA status register */
+#define	DMA_DMODE	(Z180_IO_BASE+0x31)	/* DMA mode register */
+#define	DMA_DCNTL	(Z180_IO_BASE+0x32)	/* DMA/WAIT control register */
+
+; Z180 Timer
+#define	TIME_TMDR0L	(Z180_IO_BASE+0x0C)	/* Timer data register,    channel 0L */
+#define	TIME_TMDR0H	(Z180_IO_BASE+0x0D)	/* Timer data register,    channel 0H */
+#define	TIME_RLDR0L	(Z180_IO_BASE+0x0E)	/* Timer reload register,  channel 0L */
+#define	TIME_RLDR0H	(Z180_IO_BASE+0x0F)	/* Timer reload register,  channel 0H */
+#define	TIME_TCR	(Z180_IO_BASE+0x10)	/* Timer control register */
+#define	TIME_TMDR1L	(Z180_IO_BASE+0x14)	/* Timer data register,    channel 1L */
+#define	TIME_TMDR1H	(Z180_IO_BASE+0x15)	/* Timer data register,    channel 1H */
+#define	TIME_RLDR1L	(Z180_IO_BASE+0x16)	/* Timer reload register,  channel 1L */
+#define	TIME_RLDR1H	(Z180_IO_BASE+0x17)	/* Timer reload register,  channel 1H */
+#define	TIME_FRC	(Z180_IO_BASE+0x18)	/* Timer Free running counter */
+
+; Z180 Interrupts
+#define	INT_IL		(Z180_IO_BASE+0x33)	/* Interrupt vector low register */
+#define	INT_ITC		(Z180_IO_BASE+0x34)	/* Interrupt/Trap control register */
+
+; Refresh control
+#define	MEM_RCR		(Z180_IO_BASE+0x36)	/* Refresh control */
+
+; I/O control
+#define	IO_ICR		(Z180_IO_BASE+0x3F)	/* I/O control */
+
+; ESCC serial ports (Z80182)
+#define	ESCC_CTRL_A	0xE0	/* ESCC Channel A control register */
+#define	ESCC_DATA_A	0xE1	/* ESCC Channel A data register */
+#define	ESCC_CTRL_B	0xE2	/* ESCC Channel B control register */
+#define	ESCC_DATA_B	0xE3	/* ESCC Channel B data register */
+
+#define	PORT_A_DDR	0xED	/* Port A data direction register */
+#define	PORT_A_DATA	0xEE	/* Port A data register */
+#define	PORT_B_DDR	0xE4	/* Port B data direction register */
+#define	PORT_B_DATA	0xE5	/* Port B data register */
+#define	PORT_C_DDR	0xDD	/* Port C data direction register */
+#define	PORT_C_DATA	0xDE	/* Port C data register */
+
+#define	Z182_SYSCONFIG	0xEF	/* System Configuration Register */
+#define	Z182_RAMUBR	0xE6	/* RAM upper boundary register */
+#define	Z182_RAMLBR	0xE7	/* RAM lower boundary register */
+#define	Z182_ROMBR	0xE8	/* ROM boundary register */
+
+; Debugging
+#define	DEBUGBANK	0
+; ESCC serial ports (Z80182)
+#define	ESCC_CTRL_A	0xE0	/* ESCC Channel A control register */
+#define	ESCC_DATA_A	0xE1	/* ESCC Channel A data register */
+#define	ESCC_CTRL_B	0xE2	/* ESCC Channel B control register */
+#define	ESCC_DATA_B	0xE3	/* ESCC Channel B data register */
+
+#define	PORT_A_DDR	0xED	/* Port A data direction register */
+#define	PORT_A_DATA	0xEE	/* Port A data register */
+#define	PORT_B_DDR	0xE4	/* Port B data direction register */
+#define	PORT_B_DATA	0xE5	/* Port B data register */
+#define	PORT_C_DDR	0xDD	/* Port C data direction register */
+#define	PORT_C_DATA	0xDE	/* Port C data register */
+
+#define	Z182_SYSCONFIG	0xEF	/* System Configuration Register */
+#define	Z182_RAMUBR	0xE6	/* RAM upper boundary register */
+#define	Z182_RAMLBR	0xE7	/* RAM lower boundary register */
+#define	Z182_ROMBR	0xE8	/* ROM boundary register */
+
+; Debugging
+#define	DEBUGBANK	0
+#define	DEBUGCOMMON	0
