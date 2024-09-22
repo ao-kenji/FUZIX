@@ -60,9 +60,9 @@ extern uint16_t swap_dev;
 #define NBUFS    5        /* Number of block buffers */
 #define NMOUNTS	 2	  /* Number of mounts at a time */
 
-#define CONFIG_NET
-#define CONFIG_NET_WIZNET
-#define CONFIG_NET_W5500
+#undef CONFIG_NET
+#undef CONFIG_NET_WIZNET
+#undef CONFIG_NET_W5500
 
 #define plt_discard()
 #define plt_copyright()
