@@ -2,7 +2,7 @@
 #include <kdata.h>
 #include <rtc.h>
 
-extern uint8_t *xpfe_rtc;
+extern uint8_t xpfe_rtc[8];		/* in commonmem.S */
 
 uint_fast8_t plt_rtc_secs(void)
 {
@@ -21,10 +21,10 @@ int plt_rtc_read(void)
 	if (udata.u_count < len)
 		len = udata.u_count;
 
-	irq = di();		/* need this? */
+	irq = di();
 	for (i = 0; i < 8; i++)
 		*p++ = *q++;
-	irqrestore(irq);	/* need this? */
+	irqrestore(irq);
 
 	cmos.type = CMOS_RTC_DEC;
 	if (uput(&cmos, udata.u_base, len) == -1)
