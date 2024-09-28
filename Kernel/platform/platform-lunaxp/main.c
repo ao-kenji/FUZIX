@@ -9,6 +9,7 @@
 
 uint16_t ramtop = PROGTOP;
 uint16_t swap_dev = 0xFFFF;
+uint8_t plt_tick_present = 1;
 
 extern uint8_t irqvector;
 void z180_timer_interrupt(void);	/* in lunaxp.S */
