@@ -18,20 +18,10 @@ void z180_timer_interrupt(void);	/* in lunaxp.S */
  *	This routine is called continually when the machine has nothing else
  *	it needs to execute. On a machine with entirely interrupt driven
  *	hardware this could just halt for interrupt.
- *
- *	The SBCv2 has no interrupts so we must call sync_clock(), and as the
- *	PropIO tty is not interrupt driven we also poll the ttys. This gives
- *	us a nice interactive feel when the machine is idle, even if a polled
- *	tty can otherwise suck.
  */
 void plt_idle(void)
 {
-	/* Disable interrupts so we don't accidentally process a polled tty
-	   and interrupt call at once and make a mess */
-	irqflags_t irq = di();
-	tty_poll();
-	/* Restore prior state. */
-	irqrestore(irq);
+	/* Nothing to do */
 }
 
 /*
