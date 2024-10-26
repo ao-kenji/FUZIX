@@ -9,6 +9,7 @@
 # coco2cart:	Tandy COCO2 or Dragon with 64K and IDE or SDC + cartridge flash
 #		(or xroar emulator )
 # coco3:	Tandy COCO3 512K (or MAME)
+# cpc6128: Amstrad CPC6128
 # cpm22:	Designed for S.100 and similar setups. Uses BIOS plus Z80
 #		customisations
 # cromemco:	Cromemco with banked memory
