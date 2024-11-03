@@ -68,7 +68,7 @@ image:
 	../../dev/blkdev.o ../../dev/tinydisk.o ../../dev/tinydisk_discard.o \
 	devtty.o xpfe_tty.o xpfe_rtc.o \
 	xpfe_disk.o xpfe_disk_asm.o xpfe_disk_discard.o \
-	/opt/fcc/lib/z80/libz80.a
+	../../../Library/libs/libcz80.a /opt/fcc/lib/z80/libz80.a
 	perl -lpe '$$_=hex' fuzix.tmpmap | paste -d" " - fuzix.tmpmap  |  sort -n |  cut -d" " -f 2- >../../fuzix.map
 	../../tools/pack85 <../../fuzix.map fuzix.bin ../../fuzix.bin
 
