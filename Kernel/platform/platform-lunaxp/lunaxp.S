@@ -149,13 +149,12 @@ init_early:
 ;
 init_hardware:
 #ifdef LUNAXP_USE_LANCE_MEM
-	ld hl,160		; 0x00000-0x1ffff, 0x28000-0x28fff
+	ld hl,128	; 0x00000-0x0ffff, 0x18000-0x1ffff, 0x28000-0x28fff
 #else
-	ld hl,96		; 0x00000-0x0ffff, 0x28000-0x28fff
+	ld hl,96	; 0x00000-0x0ffff, 0x28000-0x28fff
 #endif
 	ld (_ramsize), hl
-	ld de,64		; and 64K for kernel (so 96K gets you only
-				; one user bank, which is OK single user?)
+	ld de,64		; and 64K for kernel
 	or a
 	sbc hl,de
 	ld (_procmem), hl

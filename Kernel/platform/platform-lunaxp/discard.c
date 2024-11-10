@@ -48,24 +48,25 @@ void map_init(void)
  *
  *      We would like to use LUNA XP memroy as:
  *
- *       area 0: 0x00000-0x07fff ->  kernel low  BBR=0x00, CBR=any,  CABR=0x80 
- *       area 1: 0x08000-0x0ffff ->  kernel high BBR=any,  CBR=0x80, CABR=0x80
- *       area 2: 0x10000-0x17fff ->  user low#2  BBR=0x10, CBR=any,  CABR=0x80
- *       area 3: 0x18000-0x1ffff ->  user low#3  BBR=0x18, CBR=any,  CABR=0x80
- *       area 4: 0x20000-0x27fff ->  (XP diag ROM, can not use)
- *       area 5: 0x28000-0x2ffff ->  user low#1  BBR=0x28, CBR=any,  CABR=0x80
+ *       area#0: 0x00000-0x07fff ->  kernel low  BBR=0x00, CBR=any,  CABR=0x80
+ *       area#1: 0x08000-0x0ffff ->  kernel high BBR=any,  CBR=0x80, CABR=0x80
+ *       area#2: 0x10000-0x17fff ->  (Left memroy for LANCE, shrunken to 32KB)
+ *       area#3: 0x18000-0x1ffff ->  user low#2  BBR=0x18, CBR=any,  CABR=0x80
+ *       area#4: 0x20000-0x27fff ->  (XP diag ROM, can not use)
+ *       area#5: 0x28000-0x2ffff ->  user low#1  BBR=0x28, CBR=any,  CABR=0x80
  *
- *	Kernel low 32K uses area 0, high 32K uses area 1.
- *	User spaces are area 5, optionally plus area 2 and 3 if we disable
- *	LUNA's LANCE and use its memory for FUZIX.
+ *	Kernel low 32K uses area#0, high 32K uses area#1.
+ *	User spaces are area#5, and area#3 is also mandatory.
+ *	If we disable LUNA's LANCE(network interface), we can add area#2 as an
+ *	additional user low#3.
+ *
  *      We use BBR value as page index.
  */
 void pagemap_init(void)
 {
-	pagemap_add(0x28);	/* area 5 */
+	pagemap_add(0x28);	/* area #5 */
 #ifdef LUNAXP_USE_LANCE_MEM
-	pagemap_add(0x10);	/* area 2 */
-	pagemap_add(0x18);	/* area 3 */
+	pagemap_add(0x18);	/* area #3 */
 #endif
 }
 
