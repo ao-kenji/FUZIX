@@ -144,13 +144,7 @@ void tty_data_consumed(uint_fast8_t minor)
 void tty_poll(void)
 {
 	uint8_t c;
-	extern uint8_t xpfe_getc_result;
 
-	/*
-	 * FIXME: I would like to write 'c = xpfe_getc()', but now I do not
-	 * understand how to return a value from assembler routine.
-	 */
-	xpfe_getc();
-	c = xpfe_getc_result;
+	c = xpfe_getc();
 	tty_inproc(1, c);
 }

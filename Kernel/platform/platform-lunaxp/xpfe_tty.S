@@ -26,7 +26,6 @@ __putc0:
 	ret
 
 _xpfe_getc:
-	push hl
 	ld hl, _xpfe_rx_flag
 	ld a, (hl)		; is the flag set?
 	or a
@@ -40,6 +39,5 @@ __getc0:
 	inc hl			; now HL points _xpfe_rx_flag
 	ld (hl), 0		; reset the flag
 __getc1:
-	ld (_xpfe_getc_result), a	; save the input char
-	pop hl
+	ld l, a			; save the input char as the return value
 	ret

@@ -36,7 +36,6 @@ relay_buf:
 	.export _xpd_blknum_3
 	.export hw_irqvector
 	.export _interrupt_table
-	.export _xpfe_getc_result
 
 _xpfe_if:
 _xpfe_magic:			; +00
@@ -99,9 +98,7 @@ _irqvector:
 	.byte 0
 hw_irqvector:
 	.byte 0
-_xpfe_getc_result:
-	.byte 0
-	.byte 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ;
+	.byte 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ; +c0
 
 _interrupt_table:
 	.word z180_irq_unused	; +e0 : #1  INT1 external interrupt
