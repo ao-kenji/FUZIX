@@ -19,6 +19,8 @@ uaddr_save:
 	.ds	2
 
 _xpd_xfer_go:
+	push bc
+	push ix
 	ld a, (_td_raw)			; 0:kernel / 1:user / 2:swap
 	or a				; test is_kernel
 	jr z, kernel_xfer
@@ -84,6 +86,8 @@ wait_for_finish:
 	ldir
 
 wrap_up:
+	pop ix
+	pop bc
 	jp map_kernel_restore		; else map kernel then return
 
 #endif	/* of CONFIG_XPFE_DISK */
