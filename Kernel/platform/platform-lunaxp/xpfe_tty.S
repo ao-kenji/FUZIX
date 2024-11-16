@@ -10,19 +10,20 @@
 	.export _xpfe_getc
 
 _xpfe_putc:
+	pop hl
+	pop de			; we get the output char in E
+	push de
 	push hl
-	push af			; push the output char in A
+
 	ld hl, _xpfe_tx_flag
 __putc0:
 	ld a, (hl)		; is the flag cleared?
 	or a
 	jr nz, __putc0		; if no, try again until cleared
 	dec hl			; now HL points _xpfe_tx_data
-	pop af			; pop the output char
-	ld (hl), a		; write the output char in _xpfe_tx_data
+	ld (hl), e		; write the output char in _xpfe_tx_data
 	inc hl			; now HL points _xpfe_tx_flag
 	ld (hl), 0ffh		; set the flag
-	pop hl
 	ret
 
 _xpfe_getc:
