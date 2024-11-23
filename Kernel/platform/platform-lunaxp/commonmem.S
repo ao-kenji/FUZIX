@@ -13,14 +13,11 @@
 relay_buf:
 	.ds	512
 
-	.export _xpfe_if
-	.export _xpfe_magic
 	.export _xpfe_tx_data
 	.export _xpfe_tx_flag
 	.export _xpfe_rx_data
 	.export _xpfe_rx_flag
 	.export _xpfe_rtc
-	.export _irqvector
 	.export _xpd_lba_0
 	.export _xpd_lba_1
 	.export _xpd_lba_2
@@ -34,6 +31,7 @@ relay_buf:
 	.export _xpd_blknum_1
 	.export _xpd_blknum_2
 	.export _xpd_blknum_3
+	.export _irqvector
 	.export hw_irqvector
 	.export _interrupt_table
 
