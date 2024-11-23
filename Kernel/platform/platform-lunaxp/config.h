@@ -16,7 +16,7 @@
 #define LUNAXP_USE_LANCE_MEM
 /* This is the number of banks of user memory available (maximum) */
 #ifdef LUNAXP_USE_LANCE_MEM
-#define MAX_MAPS	3		/* 160 KByte minus the kernel 64KByte */
+#define MAX_MAPS	2		/* 128 KByte minus the kernel 64KByte */
 #else
 #define MAX_MAPS	1		/* 96 KByte minus the kernel 64KByte */
 #endif
@@ -25,7 +25,7 @@
    is hardware dependant */
 #define MAP_SIZE	0x8000
 /* How many banks do we have in our address space */
-#define CONFIG_BANKS	2	/* 2 x 32K */
+#define CONFIG_BANKS	2	/* 64KB = 32KB x 2areas */
 
 /*
  *	Define the program loading area (needs to match kernel.def)
