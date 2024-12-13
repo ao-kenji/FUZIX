@@ -50,7 +50,7 @@ void map_init(void)
  *
  *       area#0: 0x00000-0x07fff ->  kernel low  BBR=0x00, CBR=any,  CABR=0x80
  *       area#1: 0x08000-0x0ffff ->  kernel high BBR=any,  CBR=0x80, CABR=0x80
- *       area#2: 0x10000-0x17fff ->  (Left memroy for LANCE, shrunken to 32KB)
+ *       area#2: 0x10000-0x17fff ->  (Left memory for LANCE, shrunken to 32KB)
  *       area#3: 0x18000-0x1ffff ->  user low#2  BBR=0x18, CBR=any,  CABR=0x80
  *       area#4: 0x20000-0x27fff ->  (XP diag ROM, can not use)
  *       area#5: 0x28000-0x2ffff ->  user low#1  BBR=0x28, CBR=any,  CABR=0x80
