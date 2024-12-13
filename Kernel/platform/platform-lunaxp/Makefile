@@ -76,6 +76,8 @@ IMAGES = $(FUZIX_ROOT)/Images/$(TARGET)
 
 diskimage:
 	# Make a blank disk image with partition
-	dd if=$(FUZIX_ROOT)/Standalone/filesystem-src/parttab.20M of=$(IMAGES)/disk.img bs=20152320 conv=sync
+	dd if=$(FUZIX_ROOT)/Standalone/filesystem-src/parttab.20M of=$(IMAGES)/disk20M.img bs=20152320 conv=sync
+	dd if=$(FUZIX_ROOT)/Standalone/filesystem-src/parttab.64M of=$(IMAGES)/disk64M.img bs=64M conv=sync
 	# Add the file system
-	dd if=$(IMAGES)/filesys8.img of=$(IMAGES)/disk.img bs=512 seek=2048 conv=notrunc
+	dd if=$(IMAGES)/filesys8.img of=$(IMAGES)/disk20M.img bs=512 seek=2048 conv=notrunc
+	dd if=$(IMAGES)/filesys.img of=$(IMAGES)/disk64M.img bs=512 seek=2048 conv=notrunc
