@@ -11,23 +11,23 @@
 
 __uputc:
 	tsx
-	ldab 5,x
-	ldx 2,x
+	ldab 3,x
+	ldx 4,x
 	jsr map_proc_always
 	stab 0,x
 	jsr map_kernel
-	jmp ret4
+	jmp __cleanup4
 
 __uputw:
-	ldaa 4,x
 	tsx
-	ldab 5,x
-	ldx 2,x
+	ldaa 2,x
+	ldab 3,x
+	ldx 4,x
 	jsr map_proc_always
 	staa 0,x
 	stab 1,x
 	jsr map_kernel
-	jmp ret4
+	jmp __cleanup4
 
 __ugetc:
 	tsx
@@ -36,7 +36,7 @@ __ugetc:
 	ldab 0,x
 	clra
 	jsr map_kernel
-	jmp ret2
+	jmp __cleanup2
 
 __ugetw:
 	tsx
@@ -45,13 +45,13 @@ __ugetw:
 	ldaa 0,x
 	ldab 1,x
 	jsr map_kernel
-	jmp ret2
+	jmp __cleanup2
 
 __uzero:
 	tsx
-	ldaa 2,x
-	ldab 3,x
-	ldx 4,x
+	ldaa 4,x
+	ldab 5,x
+	ldx 2,x
 	jsr map_proc_always
 	; Optimize, unroll etc ?
 	pshb
@@ -69,7 +69,7 @@ endwipe:
 	bsr	uzerolp
 enduz:
 	jsr map_kernel
-	jmp ret4
+	jmp __cleanup4
 
 	
 uzerolp:
@@ -84,13 +84,13 @@ __uget:
 	; We can optimize this a lot by abusing the stack etc but
 	; start simple. Take care as tmp/to/from are kernel mapped
 	tsx
-	ldx 2,x
+	ldx 6,x
 	stx @tmp
 	tsx
 	ldx 4,x	; to
 	stx @to
 	tsx
-	ldx 6,x		; from
+	ldx 2,x		; from
 	stx @from
 ugetl:
 	ldx @from
@@ -110,20 +110,20 @@ ugetl:
 	bne ugetl
 	clrb
 	clra
-	jmp ret6
+	jmp __cleanup6
 
 __uput:
 	; This one is harder as we've got to juggle two pointers
 	; We can optimize this a lot by abusing the stack etc but
 	; start simple. Take care as tmp/to/from are kernel mapped
 	tsx
-	ldx 2,x
-	stx @tmp
+	ldx 6,x
+	stx @tmp		
 	tsx
 	ldx 4,x
 	stx @to
 	tsx
-	ldx 6,x		; from
+	ldx 2,x		; from
 	stx @from
 uputl:
 	ldx @from
@@ -142,7 +142,7 @@ uputl:
 	bne uputl
 	clrb
 	clra
-	jmp ret6
+	jmp __cleanup6
 
 	.zp
 

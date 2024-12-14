@@ -336,6 +336,7 @@ reset_cursor_line:
         ld (de),a
 	
         VIDEO_UNMAP
+	ret
 
 	.if CPCVID_ONLY
 _do_beep:
@@ -348,7 +349,7 @@ cpc_do_beep:
         ld d,#2        ;channel C 110Hz
         call write_ay_reg
         ld e,#7          
-        ld d,#0x20       ;mixer->Only channel C
+        ld d,#0x3b       ;mixer->Only channel C
         call write_ay_reg
         ld e,#0xa
         ld d,#0x10      ;Use envelope on C
@@ -360,7 +361,8 @@ cpc_do_beep:
         ld d,#0x1      ;100ms envelope period
         call write_ay_reg
         ld e,#0xd
-        ld d,#0         ;Ramp down in one cicle and remain quiet
+        ld d,#0x9         ;Ramp down in one cicle and remain quiet
+        call write_ay_reg
         ret
 
 write_ay_reg: ; E = register, D = data from https://cpctech.cpc-live.com/source/sampplay.html
