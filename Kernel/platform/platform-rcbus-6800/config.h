@@ -23,9 +23,6 @@
 /* Permit large I/O requests to bypass cache and go direct to userspace */
 #define CONFIG_LARGE_IO_DIRECT(x)	1
 
-/* Arguments the other way around */
-#define CONFIG_CALL_R2L
-
 #define TICKSPERSEC 20	    /* Ticks per second */
 
 #define MAPBASE	    0x0000  /* We map from 0 */
@@ -44,8 +41,10 @@ extern uint16_t swap_dev;
 #define CONFIG_DYNAMIC_SWAP
 #define swap_map(x)	(x)
 
-#define CONFIG_IDE
-#define MAX_BLKDEV 1
+#define CONFIG_TD_NUM	2
+#define CONFIG_TD_IDE
+#define CONFIG_TINYIDE_8BIT
+#define IDE_IS_8BIT(x)	1
 
 #define BOOT_TTY 513        /* Set this to default device for stdio, stderr */
 
@@ -62,3 +61,7 @@ extern uint16_t swap_dev;
 #define plt_copyright()
 
 #define BOOTDEVICENAMES "hd#"
+
+#define CONFIG_SMALL
+
+/* TODO DS1302 support, CONFIG_DYNAMIC_BUFPOOL */
