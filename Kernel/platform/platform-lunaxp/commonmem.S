@@ -31,6 +31,7 @@ relay_buf:
 	.export _xpd_blknum_1
 	.export _xpd_blknum_2
 	.export _xpd_blknum_3
+	.export _xpfe_halted
 	.export _irqvector
 	.export hw_irqvector
 	.export _interrupt_table
@@ -39,11 +40,13 @@ _xpfe_if:
 _xpfe_magic:			; +00
 	.byte 'X', 'P', 'F', 'E'
 
-_xpfe_tx_data:			; +04
-	.byte 0
+_xpfe_tx_data:
+	.byte 0			; +04
 _xpfe_tx_flag:
 	.byte 0
-	.byte 0, 0		; padding
+	.byte 0			; padding
+_xpfe_halted:
+	.byte 0			; 0: alive, 1: halted
 
 _xpfe_rx_data:
 	.byte 0			; +08
