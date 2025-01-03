@@ -81,6 +81,8 @@ _plt_reboot:
 	ld hl, msg_halted
 	call outstring
 	di
+	ld a, 1
+	ld (_xpfe_halted), a
 	halt
 
 msg_halted:
