@@ -13,6 +13,7 @@ uint8_t plt_tick_present = 1;
 
 extern uint8_t irqvector;
 void z180_timer_interrupt(void);	/* in lunaxp.S */
+void tty_pollirq_asci0(void);		/* in devtty.c */
 
 /*
  *	This routine is called continually when the machine has nothing else
@@ -39,10 +40,10 @@ void plt_interrupt(void)
 	case Z180_INT_TIMER0:
 		z180_timer_interrupt();
 		return;
-#if 0	/* not yet implemented */
 	case Z180_INT_ASCI0:
-		tty_pollirq_asci0();
+		tty_poll_asci0();
 		return;
+#if 0	/* not yet implemented */
 	case Z180_INT_ASCI1:
 		tty_pollirq_asci1();
 		return;

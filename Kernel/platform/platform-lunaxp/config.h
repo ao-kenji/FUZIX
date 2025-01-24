@@ -127,7 +127,7 @@ extern uint16_t swap_dev;
 #define CMDLINE	NULL	  /* Location of root dev name */
 
 /* Device parameters */
-#define NUM_DEV_TTY 1	  /* How many tty devices does the platform support */
+#define NUM_DEV_TTY 2	  /* How many tty devices does the platform support */
 #define TTYDEV   BOOT_TTY /* Device used by kernel for messages, panics */
 #define NBUFS    5        /* Number of block buffers. Must be 4+ and must match
                              kernel.def */

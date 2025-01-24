@@ -109,8 +109,8 @@ _interrupt_table:
 	.word z180_irq_unused	; +e8 : #5  DMA 0
 	.word z180_irq_unused	; +ea : #6  DMA 1
 	.word z180_irq_unused	; +ec : #7  CSI/O
-	.word z180_irq_unused	; +ee : #8  ASCI 0
-	.word z180_irq_unused	; +f0 : #9  ASCI 1
+	.word z180_irq8		; +ee : #8  ASCI 0
+	.word z180_irq9		; +f0 : #9  ASCI 1
 	.word z180_irq_unused	; +f2 :#10
 	.word z180_irq_unused	; +f4 :#11
 	.word z180_irq_unused	; +f6 :#12

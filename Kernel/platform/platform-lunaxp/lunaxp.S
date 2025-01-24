@@ -25,8 +25,12 @@
 	.export _kernel_flag
 	.export _int_disabled
 	.export z180_irq3
+	.export z180_irq8
+	.export z180_irq9
 	.export z180_irq_unused
 	.export _z180_timer_interrupt
+	.export _tty_poll_asci0
+	.export _tty_out_asci0
 
 	; exported debugging tools
 	.export _plt_monitor
@@ -88,7 +92,57 @@ _plt_reboot:
 msg_halted:
 	.ascii "XP halted."
 	.byte 13, 10, 0
+;
+; HD647180(Z180) ASCI0 in/out
+;
+; void tty_poll_asci0(void)
+;
+_tty_poll_asci0:
+			; we do not use BC, so no need to save BC
+__tpa0_1:
+	in0 a, ASCI_STAT0
+	and 0x80
+	jr z, __tpa0_2
 
+	in0 l, ASCI_RDR0
+	ld h,0
+	push hl			; received character (2nd arg)
+
+	ld hl, 0x0002
+	push hl			; tty2 (1st arg)
+
+	call _tty_inproc	; tty_inproc(2, char)
+	pop hl
+	pop hl
+	jr __tpa0_1
+
+__tpa0_2:
+	in0 a, ASCI_STAT0
+	and 0x70
+	jr nz, __tpa0_3
+
+	in0 a, ASCI_CNTLA0
+	and 0xf7		; clear bit3
+	out0 ASCI_CNTLA0, a
+
+__tpa0_3:
+	ret
+;
+; void tty_out_asci0(unsigned char)
+;
+_tty_out_asci0:
+	pop hl
+	pop de
+	push de		; E has the arg1, i.e. output char.
+	push hl
+			; we do not use BC, so no need to save BC
+__toa0_1:
+	in0 a, ASCI_STAT0
+	and 0x02
+	jr z, __toa0_1
+
+	out0 ASCI_TDR0, e
+	ret
 ; -----------------------------------------------------------------------------
 ; KERNEL MEMORY BANK (may be below 0x8000, only accessible when the kernel is
 ; mapped)
@@ -190,6 +244,29 @@ init_hardware:
 ;	Enable Timer Ch0
 	ld a, 0x11			; enable downcounting & interrupt
 	out0 TIME_TCR, a
+
+;	Set up ASCI Control Register A0
+;	  Enable receiver(bit 6) and transmitter(bit 5)
+;	  /RTS0 (Request to send) (bit 4)
+;	  Clear errors (bit 3)
+;	  8bit, no parity, 1 stop bit (bit 2-0)
+
+	ld a, 0x64
+	out0 ASCI_CNTLA0, a
+
+;	Set up ASCI Control Register B0
+;	  PreScale = x10 (bit 5)
+;	  Rate = 16 (bit 3)
+;	  Baud Rate = 9600 (bit 2-0) with internal clock 6.144MHz
+
+	ld a, 0x02
+	out0 ASCI_CNTLB0, a
+
+;	Set up ASCI Status Register 0
+;	  Receive interrupt enable (bit 3)
+
+	ld a, 0x08
+	out0 ASCI_STAT0, a
 
 ;	If we enable ITE1, it seems to hang up at "Enabling interrupts ... "
 ;	in fuzix_main() on the real LUNA XP hardware.
@@ -377,6 +454,16 @@ z180_irqgo:
 	;    call outchar
 	pop af
 	jp interrupt_handler
+
+z180_irq8:		; ASCI0
+	push af
+	ld a, 8
+	jr z180_irqgo
+
+z180_irq9:		; ASCI1
+	push af
+	ld a, 9
+	jr z180_irqgo
 
 z180_irq_unused:
 	push af

@@ -17,11 +17,14 @@
 
 extern void    xpfe_putc(uint8_t);
 extern uint8_t xpfe_getc(void);
+extern void    tty_poll_asci0(void);
+extern void    tty_out_asci0(uint8_t);
 
 /*
  *	One buffer for each tty
  */
-static uint8_t tbuf1[TTYSIZ];
+static uint8_t tbuf1[TTYSIZ];	/* pseudo tty with xpfe utility */
+static uint8_t tbuf2[TTYSIZ];	/* for ASCI0 */
 static uint8_t sleeping;
 
 /*
@@ -30,7 +33,12 @@ static uint8_t sleeping;
 
 tcflag_t termios_mask[NUM_DEV_TTY + 1] = {
 	0,
-	_CSYS
+	_CSYS,
+#if 0	/* not yet */
+	_CSYS|CBAUD|PARENB|PARODD|CSIZE|CSTOPB|CRTSCTS,
+#else
+	_CSYS,
+#endif
 };
 
 
@@ -42,6 +50,7 @@ tcflag_t termios_mask[NUM_DEV_TTY + 1] = {
 struct s_queue ttyinq[NUM_DEV_TTY + 1] = {	/* ttyinq[0] is never used */
 	{NULL, NULL, NULL, 0, 0, 0},
 	{tbuf1, tbuf1, tbuf1, TTYSIZ, 0, TTYSIZ / 2},
+	{tbuf2, tbuf2, tbuf2, TTYSIZ, 0, TTYSIZ / 2},
 };
 
 /* Write to system console. This is the backend to all the kernel messages,
@@ -93,6 +102,8 @@ void tty_putc(uint_fast8_t minor ,uint_fast8_t c)
 {
 	if (minor == 1)
 		xpfe_putc(c);
+	else if (minor == 2)
+		tty_out_asci0(c);
 }
 
 /*
@@ -146,5 +157,6 @@ void tty_poll(void)
 	uint8_t c;
 
 	c = xpfe_getc();
-	tty_inproc(1, c);
+	if (c != 0)
+		tty_inproc(1, c);
 }
