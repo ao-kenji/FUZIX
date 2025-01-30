@@ -46,7 +46,7 @@ void map_init(void)
  *	might need to just dec/inc before using it in an I/O port or similar
  *	to avoid confusion.
  *
- *      We would like to use LUNA XP memroy as:
+ *      We would like to use LUNA XP memory as:
  *
  *       area#0: 0x00000-0x07fff ->  kernel low  BBR=0x00, CBR=any,  CABR=0x80
  *       area#1: 0x08000-0x0ffff ->  kernel high BBR=any,  CBR=0x80, CABR=0x80
