@@ -146,5 +146,6 @@ void tty_poll(void)
 	uint8_t c;
 
 	c = xpfe_getc();
-	tty_inproc(1, c);
+	if (c != 0)
+		tty_inproc(1, c);
 }
