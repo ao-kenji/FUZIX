@@ -34,8 +34,6 @@
 #define PROGLOAD    0x0100  /* Load and run here */
 #define PROGTOP     0x7E00  /* Top of program, base of U_DATA stash */
 #define PROC_SIZE   32 	    /* Memory needed per process including stash */
-
-#if 1
 /*
  *	Definitions for swapping.
  */
@@ -56,8 +54,6 @@ extern uint16_t swap_dev;
  */
 #define swap_map(x)	((uint8_t *)(x))
 
-#endif	/* SWAP */
-
 /* disk service */
 #define CONFIG_TD_NUM		1	/* will be 2 */
 #define CONFIG_XPFE_DISK		/* use XPFE pseudo disk service */
@@ -67,10 +63,8 @@ extern uint16_t swap_dev;
 
 /* We will resize the buffers available after boot. This is the normal setting */
 #define CONFIG_DYNAMIC_BUFPOOL
-#if 1
 /* Swap will be set up when a suitably labelled partition is seen */
 #define CONFIG_DYNAMIC_SWAP
-#endif
 /* Larger transfers (including process execution) should go directly not via
    the buffer cache. For all small (eg bit) systems this is the right setting
    as it avoids polluting the small cache with data when it needs to be full
@@ -88,10 +82,7 @@ extern uint16_t swap_dev;
    where it lacks one). This is not usually needed but for platforms it is also
    see platform-sbcv2/main.c on what is needed */
 /* #define CONFIG_NO_CLOCK */
-/* Set how often we actually poll this RTC in ticks - 1 means always. On the
-   SBCv2 it's slow so don't sync often. If we have no timer tick then we will
-   read the RTC regularly as needed - and it'll suck accordingly regardless
-   of this setting */
+/* Set how often we actually poll this RTC in ticks - 1 means always. */
 #define CONFIG_RTC_INTERVAL	1
 /*
  * How fast does the clock tick (if present), or how many times a second do
@@ -109,7 +100,7 @@ extern uint16_t swap_dev;
 /* Core networking support */
 /* #define CONFIG_NET */
 /* Or native (eg SLIP) */
-//#define CONFIG_NET_NATIVE
+/* #define CONFIG_NET_NATIVE */
 
 /*
  *	The device (major/minor) for the console and boot up tty attached to
