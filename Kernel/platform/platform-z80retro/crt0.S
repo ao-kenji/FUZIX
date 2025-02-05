@@ -12,13 +12,13 @@ init:                       ; must be at 0x0100 as we are loaded at that
 
 	ld	sp, kstack_top
 	; Move the common memory where it belongs
-	ld	hl, __data
+	ld	hl, __bss
 	ld	de, __common
 	ld	bc, __common_size
 	ldir
-;	ld	de, __commondata
-;	ld	bc, __commondata_size
-;	ldir
+	ld	de, __commondata
+	ld	bc, __commondata_size
+	ldir
 	; then the discard
 	; Discard can just be linked in but is next to the buffers
 	ld	de, __discard

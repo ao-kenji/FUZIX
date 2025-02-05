@@ -1,5 +1,5 @@
 ;
-;    Spectrum +3 support
+;    Amstrad CPC6128 support
 
         .module cpc6128
 
@@ -84,7 +84,7 @@ _plt_monitor:
 	out (c), c               ;; [4] 92h= 1001 0010 : (B7=1)=> I/O Mode,        (B6-5=00)=> Mode 1,          
 								;;                       (B4=1)=> Port A=Input,    (B3=0)=> Port Cu=Output, 
 								;;                       (B2=0)=> Group B, Mode 0, (B1=1)=> Port B=Input, (B0=0)=> Port Cl=Output
-	ld a, #0x45		
+	ld a, #0x45					;; SPACE
 	ld    b, d               ;; [1] B = F6h => Write the value of A to PPI's Port C to select next Matrix Line
 	out (c), a               ;; [4] 
 	ld    b, e               ;; [1] B = F4h => Read from PPI's Port A: Pressed/Not Pressed Values from PSG
@@ -95,7 +95,8 @@ _plt_monitor:
 _plt_reboot:
 	di
 	;halt ;we are debugging why we end here
-	ld bc, #0x7f89 ;this would set the firmware ready for boot into firmware with (out (c),c ; rst0)
+	ld bc, #0x7f89 	;this would set the firmware ready for boot into firmware with (out (c),c ; rst0)
+					;work with the 6128 firmware, fails with the 464 & the 664 firmware, need to investigate.
 	out (c), c
 	    rst 0		; back into our booter
 

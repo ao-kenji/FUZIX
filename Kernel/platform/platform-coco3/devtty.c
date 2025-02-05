@@ -207,8 +207,8 @@ void apply_gime(int minor)
 	*(volatile uint8_t *) 0xff98 = (hz & 0x78) | p->vmod;
 	*(volatile uint8_t *) 0xff99 = p->vres;
 	*(volatile uint8_t *) 0xff9a = p->border;
-	twidth = curtty->width << 1;	/* One word per symbol */
-	theight = curtty->height;
+	twidth = p->width << 1;	/* One word per symbol */
+	theight = p->height;
 }
 
 /* A wrapper for tty_close that closes the DW port properly */
@@ -467,8 +467,10 @@ int gfx_ioctl(uint_fast8_t minor, uarg_t arg, char *ptr)
 			if (m > 4)
 				goto inval;
 			memcpy(&(ttytab[minor - 1].vmod), &(mode[m]), sizeof(struct mode_s));
-			if (minor == curminor)
+			if (minor == curminor) {
+				vt_load(&curtty->vt);
 				apply_gime(minor);
+			}
 			return 0;
 		}
 	case GFXIOC_DRAW:
@@ -525,10 +527,11 @@ void set_defmode(char *s)
 __attribute__((section(".discard")))
 void devtty_init()
 {
+	int i;
 	/* set default keyboard delay/repeat rates */
 	keyrepeat.first = REPEAT_FIRST * (TICKSPERSEC / 10);
 	keyrepeat.continual = REPEAT_CONTINUAL * (TICKSPERSEC / 10);
-	is_rgb = *((volatile uint8_t *)0xFF22) & 8;
+	is_rgb = (*((volatile uint8_t *)0xFF22) & 8) == 0;
 	if (is_rgb)
 		apply_defmode(0);
 	else {
@@ -544,6 +547,12 @@ void devtty_init()
 		memcpy((uint8_t *) 0xffb0, rgb_def_pal, 16);
 	else	/* These are bit dubious see : https://exstructus.com/tags/coco/australia-colour-palette/ */
 		memcpy((uint8_t *) 0xffb0, cmp_def_pal, 16);
-	vt_load(&curtty->vt);
-	clear_lines(0, theight);
+	for (i = 1; i >= 0; --i) {
+		curtty = &ttytab[i];
+		vt_load(&curtty->vt);
+		twidth = curtty->width << 1;	/* One word per symbol */
+		vt_cursor_off();
+		clear_lines(0, curtty->height);
+		vt_cursor_on();
+	}
 }
