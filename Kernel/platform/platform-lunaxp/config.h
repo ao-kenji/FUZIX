@@ -12,7 +12,7 @@
 /* Select a banked memory set up */
 #define CONFIG_BANK_FIXED
 
-/* If we can use LANCE memory for XP, define this */
+/* If we can use LANCE memory for XP, define this (mandatory now) */
 #define LUNAXP_USE_LANCE_MEM
 /* This is the number of banks of user memory available (maximum) */
 #ifdef LUNAXP_USE_LANCE_MEM
@@ -118,7 +118,13 @@ extern uint16_t swap_dev;
 #define CMDLINE	NULL	  /* Location of root dev name */
 
 /* Device parameters */
-#define NUM_DEV_TTY 1	  /* How many tty devices does the platform support */
+/* If we can use XP's internal ASCI, define this */
+#define	LUNAXP_USE_ASCI
+#ifdef LUNAXP_USE_ASCI	  /* How many tty devices does the platform support */
+#define NUM_DEV_TTY 3	  /* Pseudo tty, ASCI0 and ASCI1 */
+#else
+#define NUM_DEV_TTY 1	  /* Pseudo tty only */
+#endif
 #define TTYDEV   BOOT_TTY /* Device used by kernel for messages, panics */
 #define NBUFS    5        /* Number of block buffers. Must be 4+ and must match
                              kernel.def */

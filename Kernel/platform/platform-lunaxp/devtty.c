@@ -17,11 +17,21 @@
 
 extern void    xpfe_putc(uint8_t);
 extern uint8_t xpfe_getc(void);
+#ifdef LUNAXP_USE_ASCI
+extern void    tty_out_asci0(uint8_t);
+extern void    tty_poll_asci0(void);
+extern void    tty_out_asci1(uint8_t);
+extern void    tty_poll_asci1(void);
+#endif
 
 /*
  *	One buffer for each tty
  */
-static uint8_t tbuf1[TTYSIZ];
+static uint8_t tbuf1[TTYSIZ];	/* pseudo tty with xpfe utility */
+#ifdef LUNAXP_USE_ASCI
+static uint8_t tbuf2[TTYSIZ];	/* for ASCI0 */
+static uint8_t tbuf3[TTYSIZ];	/* for ASCI1 */
+#endif
 static uint8_t sleeping;
 
 /*
@@ -30,9 +40,17 @@ static uint8_t sleeping;
 
 tcflag_t termios_mask[NUM_DEV_TTY + 1] = {
 	0,
-	_CSYS
+	_CSYS,						/* for pseudo tty */
+#ifdef LUNAXP_USE_ASCI
+#if 0	/* not yet */
+	_CSYS|CBAUD|PARENB|PARODD|CSIZE|CSTOPB|CRTSCTS,	/* for ASCI0 */
+	_CSYS|CBAUD|PARENB|PARODD|CSIZE|CSTOPB|CRTSCTS,	/* for ASCI1 */
+#else
+	_CSYS,						/* for ASCI0 */
+	_CSYS,						/* for ASCI1 */
+#endif
+#endif
 };
-
 
 /*
  *	One entry per tty. The 0th entry is never used as tty minor 0 is
@@ -42,6 +60,10 @@ tcflag_t termios_mask[NUM_DEV_TTY + 1] = {
 struct s_queue ttyinq[NUM_DEV_TTY + 1] = {	/* ttyinq[0] is never used */
 	{NULL, NULL, NULL, 0, 0, 0},
 	{tbuf1, tbuf1, tbuf1, TTYSIZ, 0, TTYSIZ / 2},
+#ifdef LUNAXP_USE_ASCI
+	{tbuf2, tbuf2, tbuf2, TTYSIZ, 0, TTYSIZ / 2},
+	{tbuf3, tbuf3, tbuf3, TTYSIZ, 0, TTYSIZ / 2},
+#endif
 };
 
 /* Write to system console. This is the backend to all the kernel messages,
@@ -91,8 +113,19 @@ ttyready_t tty_writeready(uint_fast8_t minor)
  */
 void tty_putc(uint_fast8_t minor ,uint_fast8_t c)
 {
-	if (minor == 1)
+	switch (minor) {
+	case 1:
 		xpfe_putc(c);
+		break;
+	case 2:
+		tty_out_asci0(c);
+		break;
+	case 3:
+		tty_out_asci1(c);
+		break;
+	default:
+		break;
+	}
 }
 
 /*
