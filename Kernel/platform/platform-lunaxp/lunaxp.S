@@ -360,7 +360,7 @@ __putc0:
 	inc hl		; now HL is _xpfe_tx_flag
 	ld (hl), 0ffh	; set written flag
 	pop hl
-        ret
+	ret
 
 ;
 ;	z180 interrupt handler

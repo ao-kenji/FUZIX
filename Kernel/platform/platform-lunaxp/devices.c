@@ -40,5 +40,5 @@ bool validdev(uint16_t dev)
     if(dev > ((sizeof(dev_tab)/sizeof(struct devsw)) << 8) - 1)
 	return false;
     else
-        return true;
+	return true;
 }
