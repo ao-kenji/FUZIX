@@ -286,7 +286,10 @@ init_hardware:
 	out0 TIME_TCR, a
 
 ;	Set RDLR0L and RDLR0H
-	ld hl, 0x77fe
+;	The value is calculated by:
+;	  CPU_CLOCK_KHZ * 1000 / Z180_TIMER_SCALE / TICKSPERSEC - 1
+;	  = 6144 * 1000 / 20 / 40 - 1 = 7679 = 0x1dff
+	ld hl, 0x1dff
 	out0 TIME_RLDR0L, l
 	out0 TIME_RLDR0H, h
 

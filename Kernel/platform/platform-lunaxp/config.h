@@ -95,7 +95,7 @@ extern uint16_t swap_dev;
  * is a bit slower you may need to fudge things somewhat so that the kernel
  * gets 10 timer interrupt calls per second. 
  */
-#define TICKSPERSEC 10	    /* Ticks per second */
+#define TICKSPERSEC 40	    /* Ticks per second */
 
 /* Core networking support */
 /* #define CONFIG_NET */
