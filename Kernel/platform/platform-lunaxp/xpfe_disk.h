@@ -24,9 +24,6 @@ extern uint8_t xpd_dir;
 extern uint8_t xpd_go;
 extern uint8_t xpd_finish;
 extern uint8_t xpd_status;
-extern uint8_t xpd_blknum_0;
-extern uint8_t xpd_blknum_1;
-extern uint8_t xpd_blknum_2;
-extern uint8_t xpd_blknum_3;
+extern uint32_t xpd_blknum;
 
 #endif

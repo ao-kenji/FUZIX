@@ -27,10 +27,7 @@ relay_buf:
 	.export _xpd_go
 	.export _xpd_finish
 	.export _xpd_status
-	.export _xpd_blknum_0
-	.export _xpd_blknum_1
-	.export _xpd_blknum_2
-	.export _xpd_blknum_3
+	.export _xpd_blknum
 	.export _xpfe_halted
 	.export _irqvector
 	.export hw_irqvector
@@ -70,7 +67,7 @@ _xpd_lba_0:
 _xpd_dir:
 	.byte 0			; +18   0:read / other:write
 	.byte 0			; padding
-_xpd_addr:			; Caution: value is stored in little-endian
+_xpd_addr:			; Note: value is stored in little-endian
 	.byte 0, 0
 _xpd_go:
 	.byte 0			; +1c
@@ -79,15 +76,8 @@ _xpd_finish:
 	.byte 0			; padding
 _xpd_status:
 	.byte 0			; 0: not connected / 1: alive
-_xpd_blknum:
-_xpd_blknum_3:
-	.byte 0			; +20
-_xpd_blknum_2:
-	.byte 0
-_xpd_blknum_1:
-	.byte 0
-_xpd_blknum_0:
-	.byte 0
+_xpd_blknum:			; Note: value is stored in little-endian
+	.byte 0, 0, 0, 0	; +20
 	.byte 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 
 	.byte 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ; +30

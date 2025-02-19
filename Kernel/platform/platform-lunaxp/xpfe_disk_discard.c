@@ -24,12 +24,9 @@ static int xpd_identify(int dev)
 		return 0;	/* not exist or not ready */
 	}
 
-	blknum =  ((uint8_t)xpd_blknum_3 << 24);
-	blknum |= ((uint8_t)xpd_blknum_2 << 16);
-	blknum |= ((uint8_t)xpd_blknum_1 << 8);
-	blknum |= (uint8_t)xpd_blknum_0;
+	blknum =  xpd_blknum;	/* stored in little endian */
 
-	kprintf(" - OK (%u blocks)\n", blknum);
+	kprintf(" - OK (%lx blocks)\n", blknum);
 
 	return 1;
 }
