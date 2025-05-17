@@ -9,10 +9,15 @@
  *      RX  GPIO 12
  *      CS  GPIO 13
  *  CONFIG_MAKER_PI
- *	SCK GPIO 10
- *	TX  GPIO 11
- *	RX  GPIO 12
- *	CS  GPIO 15
+ *	    SCK GPIO 10
+ *	    TX  GPIO 11
+ *	    RX  GPIO 12
+ *	    CS  GPIO 15
+ *  CONFIG_PICOCALC
+ *	    SCK GPIO 18
+ *	    TX  GPIO 19
+ *	    RX  GPIO 16
+ *	    CS  GPIO 17
  *  If Undefined
  *      SCK GPIO 2
  *      TX  GPIO 3
@@ -73,6 +78,9 @@
 #define UDATA_SIZE  (UDATA_BLKS << BLKSHIFT)
 
 #define TOTALMEM 160
+#if TOTALMEM == 0
+#error TOTALMEM should have been defined via cmake
+#endif
 #define NETMEM 0
 
 #ifdef CONFIG_NET
