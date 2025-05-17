@@ -106,11 +106,11 @@ __tpa0_1:
 	jr z, __tpa0_2
 
 	in0 l, ASCI_RDR0
-	ld h,0
+	ld h, 0
 	push hl			; received character (2nd arg)
 
-	ld hl, 0x0002
-	push hl			; tty2 (1st arg)
+	ld l, 0x02
+	push hl			; specify tty2 (1st arg)
 
 	call _tty_inproc	; tty_inproc(2, char)
 	pop hl
@@ -154,11 +154,11 @@ __tpa1_1:
 	jr z, __tpa1_2
 
 	in0 l, ASCI_RDR1
-	ld h,0
+	ld h, 0
 	push hl			; received character (2nd arg)
 
-	ld hl, 0x0003
-	push hl			; tty3 (1st arg)
+	ld l, 0x03
+	push hl			; specify tty3 (1st arg)
 
 	call _tty_inproc	; tty_inproc(3, char)
 	pop hl
@@ -305,7 +305,7 @@ init_hardware:
 
 	ld a, 0x64
 	out0 ASCI_CNTLA0, a		; for channel 0
-	out0 ASCI_CNTLA1, a		; for channel 1
+;;	out0 ASCI_CNTLA1, a		; for channel 1
 
 ;	Set up ASCI Control Register B (channel 0 and 1)
 ;	  PreScale = x10 (bit 5)
@@ -314,14 +314,14 @@ init_hardware:
 
 	ld a, 0x02
 	out0 ASCI_CNTLB0, a		; for channel 0
-	out0 ASCI_CNTLB1, a		; for channel 1
+;;	out0 ASCI_CNTLB1, a		; for channel 1
 
 ;	Set up ASCI Status Register 0
 ;	  Receive interrupt enable (bit 3)
 
 	ld a, 0x08
 	out0 ASCI_STAT0, a		; for channel 0
-	out0 ASCI_STAT1, a		; for channel 1
+;;	out0 ASCI_STAT1, a		; for channel 1
 
 ;	If we enable ITE1, it seems to hang up at "Enabling interrupts ... "
 ;	in fuzix_main() on the real LUNA XP hardware.
